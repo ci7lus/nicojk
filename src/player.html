@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex" />
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <title>nicojk</title>
+  </head>
+  <body>
+    <div class="min-h-screen w-full flex flex-col text-gray-800">
+      <div class="flex-1 container mx-auto max-w-screen-md p-4">
+        <h1 class="text-xl mb-4">nicojk</h1>
+        <div>
+          <div id="dplayer"></div>
+        </div>
+      </div>
+    </div>
+    <style>
+      .diplayer-loading-icon {
+        opacity: 0;
+      }
+    </style>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/dplayer/1.26.0/DPlayer.min.js"
+      integrity="sha512-1t2U1/0xGhBZAriD+/9llOhjPs5nFBDZ7KbnHB4SGwAUPrzyS+02Kus1cz0exk5eMyXxwfHxj/1JLuie/p6xXA=="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/0.14.13/hls.min.js"
+      integrity="sha512-Ihj7hCRZShxOohR/Fi9VrdUf0pf8NmMIoP+ybyQGxWsbvEtyTvZfUaRTq50PbFWLOah0qnRSP52ESW/uz26hGQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      const dp = new DPlayer({
+        container: document.getElementById("dplayer"),
+        autoplay: true,
+        video: {
+          type: "hls",
+          url: "/",
+        },
+        danmaku: true,
+        live: true,
+      })
+      window.dp = dp
+
+      const m = location.pathname.match(/(jk\d+)/)
+      if (m) {
+        const source = new EventSource(`/sse/${m[1]}`)
+        source.addEventListener("open", () => {
+          dp.danmaku.draw({
+            text: "[nicojk-sse] open",
+            color: "#f9f9f9",
+            type: "top",
+          })
+        })
+        source.addEventListener("error", (e) => {
+          console.error(e)
+          dp.danmaku.draw({
+            text: "[nicojk-sse] error",
+            color: "#f9f9f9",
+            type: "top",
+          })
+        })
+        source.addEventListener("chat", (e) => {
+          const chat = JSON.parse(e.data)
+          dp.danmaku.draw({
+            text: chat.content,
+            color: "#fff",
+            type: "top",
+          })
+        })
+        dp.danmaku.opacity(1)
+        dp.volume(0, true, true)
+        setInterval(() => {
+          try {
+            fetch(location.href)
+          } catch (error) {}
+        }, 1000 * 60 * 2)
+      }
+    </script>
+  </body>
+</html>

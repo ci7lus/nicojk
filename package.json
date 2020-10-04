@@ -1,27 +1,30 @@
 {
-  "name": "ts",
+  "name": "nicojk",
   "version": "1.0.0",
-  "description": "My project template for TypeScript.",
+  "description": "jk.nicovideo.jp proxy with SSE",
   "author": "ci7lus <7887955+ci7lus@users.noreply.github.com>",
   "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": ""
-  },
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "files": [
-    "package.json",
-    "dist/**/*"
-  ],
   "scripts": {
     "dev": "nodemon",
-    "build": "tsc"
+    "build": "tsc",
+    "start": "ts-node src/index.ts"
   },
   "devDependencies": {
+    "@types/koa": "^2.11.4",
+    "@types/koa__router": "^8.0.3",
+    "@types/xml2js": "^0.4.5",
     "nodemon": "^2.0.4",
     "prettier": "^2.0.5",
     "ts-node": "^8.10.2",
     "typescript": "^3.9.7"
+  },
+  "dependencies": {
+    "@koa/router": "^9.4.0",
+    "axios": "^0.20.0",
+    "dayjs": "^1.9.1",
+    "koa": "^2.13.0",
+    "net": "^1.0.2",
+    "xml2js": "^0.4.23"
   }
 }
