@@ -13,7 +13,11 @@ const main = async () => {
 
   const availableChannels = await getchannels()
 
-  const channels = availableChannels.channels.channel.map((channel) => {
+  const channels = [
+    ...availableChannels.channels.channel,
+    ...availableChannels.channels.bs_channel,
+    ...availableChannels.channels.radio_channel,
+  ].map((channel) => {
     return new Channel(channel.video[0])
   })
 

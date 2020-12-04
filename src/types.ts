@@ -64,18 +64,22 @@ export type Chat = {
   }
 }
 
+type Channel = {
+  id: [string]
+  radiko_id?: [string]
+  no: [string]
+  name: [string]
+  video: [string]
+  thread: [{ id: [string]; last_res: [string]; force: [string] }]
+}
+
 export type GetChannels = {
   channels: {
     $: {
       status: "ok"
     }
-    channel: {
-      id: [string]
-      radiko_id?: [string]
-      no: [string]
-      name: [string]
-      video: [string]
-      thread: [{ id: [string]; last_res: [string]; force: [string] }]
-    }[]
+    channel: Channel[]
+    bs_channel: Channel[]
+    radio_channel: Channel[]
   }
 }
