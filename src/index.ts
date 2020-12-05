@@ -22,7 +22,7 @@ const main = async () => {
   })
 
   router.get("/", (ctx) => {
-    ctx.body = createReadStream(`${__dirname}/index.html`)
+    ctx.body = createReadStream(`${__dirname}/../src/index.html`)
     ctx.type = "html"
   })
 
@@ -30,7 +30,7 @@ const main = async () => {
     const channelId = ctx.params.channelId
     const channel = channels.find((c) => c.v === channelId)
     if (!channel) return ctx.throw(404)
-    ctx.body = createReadStream(`${__dirname}/player.html`)
+    ctx.body = createReadStream(`${__dirname}/../src/player.html`)
     ctx.type = "html"
   })
 
