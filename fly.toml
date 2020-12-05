@@ -1,0 +1,27 @@
+# fly.toml file generated for nicojk on 2020-12-05T21:01:22+09:00
+
+app = "nicojk"
+
+[build]
+  builder = "heroku/buildpacks:18"
+
+
+[[services]]
+  internal_port = 5000
+  protocol = "tcp"
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.ports]]
+    handlers = ["http"]
+    port = "80"
+
+  [[services.ports]]
+    handlers = ["tls", "http"]
+    port = "443"
+
+  [[services.tcp_checks]]
+    interval = 10000
+    timeout = 2000
